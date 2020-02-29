@@ -31,6 +31,22 @@ module.exports = {
         options.fix = true
         return options
       })
+      .end()
+    config.module
+      .rule('svg')
+      .exclude.add(path.resolve(__dirname, 'src/svgs'))
+      .end()
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(path.resolve(__dirname, 'src/svgs'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'z-icon-[name]',
+      })
+      .end()
     if (isBuild) {
       config.plugins.delete('preload')
       config.plugins.delete('prefetch')
